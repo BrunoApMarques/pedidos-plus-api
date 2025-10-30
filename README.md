@@ -20,6 +20,8 @@ Desenvolvida para fins de estudo e prática de arquitetura RESTful, boas prátic
 
 ## 🧱 Arquitetura do Projeto
 
+---
+
 src/
 ├── main/
 │ ├── java/com/bruno/pedidosplusapi/
