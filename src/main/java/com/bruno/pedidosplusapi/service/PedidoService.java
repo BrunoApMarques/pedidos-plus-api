@@ -20,6 +20,18 @@ public class PedidoService {
         this.clienteRepository = clienteRepository;
     }
 
+    public Pedido criarComDto(java.math.BigDecimal valorTotal, Long clienteId) {
+        var cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        var pedido = new Pedido();
+        pedido.setValorTotal(valorTotal);
+        pedido.setCliente(cliente);
+        pedido.setStatus(com.bruno.pedidosplusapi.model.StatusPedido.NOVO);
+
+        return pedidoRepository.save(pedido);
+    }
+
     public Pedido criar(Pedido pedido) {
         // valida se o cliente existe
         Long idCliente = pedido.getCliente().getId();

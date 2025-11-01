@@ -1,8 +1,10 @@
 package com.bruno.pedidosplusapi.controller;
 
+import com.bruno.pedidosplusapi.dto.PedidoRequest;
 import com.bruno.pedidosplusapi.model.Pedido;
 import com.bruno.pedidosplusapi.model.StatusPedido;
 import com.bruno.pedidosplusapi.service.PedidoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,12 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> criar(@RequestBody Pedido pedido) {
-        return ResponseEntity.ok(pedidoService.criar(pedido));
+    public ResponseEntity<Pedido> criar(@RequestBody @Valid PedidoRequest request) {
+        Pedido pedido = pedidoService.criarComDto(
+                request.getValorTotal(),
+                request.getClienteId()
+        );
+        return ResponseEntity.ok(pedido);
     }
 
     @GetMapping
