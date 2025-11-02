@@ -1,5 +1,6 @@
 package com.bruno.pedidosplusapi.service;
 
+import com.bruno.pedidosplusapi.dto.PedidoResponseDTO;
 import com.bruno.pedidosplusapi.model.Cliente;
 import com.bruno.pedidosplusapi.model.Pedido;
 import com.bruno.pedidosplusapi.model.StatusPedido;
@@ -20,7 +21,7 @@ public class PedidoService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Pedido criarComDto(java.math.BigDecimal valorTotal, Long clienteId) {
+    public PedidoResponseDTO criarComDto(java.math.BigDecimal valorTotal, Long clienteId) {
         var cliente = clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
@@ -29,7 +30,19 @@ public class PedidoService {
         pedido.setCliente(cliente);
         pedido.setStatus(com.bruno.pedidosplusapi.model.StatusPedido.NOVO);
 
-        return pedidoRepository.save(pedido);
+        Pedido salvo = pedidoRepository.save(pedido);
+        return toResponseDto(salvo);
+    }
+
+    private PedidoResponseDTO toResponseDto(Pedido pedido) {
+        return new PedidoResponseDTO(
+                pedido.getId(),
+                pedido.getValorTotal(),
+                pedido.getDataCriacao(),
+                pedido.getStatus().name(),
+                pedido.getCliente().getId(),
+                pedido.getCliente().getNome()
+        );
     }
 
     public Pedido criar(Pedido pedido) {
