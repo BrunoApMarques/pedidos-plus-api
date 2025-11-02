@@ -48,6 +48,10 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
+    public  java.util.List<Pedido> listarPorCliente(long clienteId) {
+        return pedidoRepository.findByClienteId(clienteId);
+    }
+
     public Pedido buscarPorId(Long id) {
         return pedidoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));

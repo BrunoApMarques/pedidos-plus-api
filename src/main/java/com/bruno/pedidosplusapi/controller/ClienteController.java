@@ -1,7 +1,9 @@
 package com.bruno.pedidosplusapi.controller;
 
 import com.bruno.pedidosplusapi.model.Cliente;
+import com.bruno.pedidosplusapi.model.Pedido;
 import com.bruno.pedidosplusapi.service.ClienteService;
+import com.bruno.pedidosplusapi.service.PedidoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,11 @@ import java.util.List;
 public class ClienteController {
 
     private final ClienteService clienteService;
+    private final PedidoService pedidoService;
 
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteService clienteService, PedidoService pedidoService) {
         this.clienteService = clienteService;
+        this.pedidoService = pedidoService;
     }
 
     @PostMapping
@@ -31,6 +35,13 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarPorId(id));
+    }
+
+    @GetMapping("/{id}/pedidos")
+    public ResponseEntity<List<Pedido>> listarPedidosDoCliente(@PathVariable Long id) {
+        clienteService.buscarPorId(id); // se não existir, lança e o handler trata
+        List<Pedido> pedidos = pedidoService.listarPorCliente(id);
+        return ResponseEntity.ok(pedidos);
     }
 
     @PutMapping("/{id}")

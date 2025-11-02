@@ -17,8 +17,7 @@ public class ClienteService {
 
     public Cliente criar(Cliente cliente) {
         // regra simples para exemplo: não deixar documento duplicado
-        clienteRepository.findByDocumento(cliente.getDocumento())
-                .ifPresent(c -> {
+        clienteRepository.findByDocumento(cliente.getDocumento()).ifPresent(c -> {
                     throw new RuntimeException("Já existe cliente com esse documento");
                 });
 
@@ -30,8 +29,7 @@ public class ClienteService {
     }
 
     public Cliente buscarPorId(Long id) {
-        return clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        return clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
     }
 
     public Cliente atualizar(Long id, Cliente clienteAtualizado) {
