@@ -1,6 +1,7 @@
 package com.bruno.pedidosplusapi.controller;
 
 import com.bruno.pedidosplusapi.dto.PedidoRequest;
+import com.bruno.pedidosplusapi.dto.PedidoResponseDTO;
 import com.bruno.pedidosplusapi.model.Pedido;
 import com.bruno.pedidosplusapi.model.StatusPedido;
 import com.bruno.pedidosplusapi.service.PedidoService;
@@ -17,16 +18,15 @@ public class PedidoController {
     private final PedidoService pedidoService;
 
     public PedidoController(PedidoService pedidoService) {
+
         this.pedidoService = pedidoService;
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> criar(@RequestBody @Valid PedidoRequest request) {
-        Pedido pedido = pedidoService.criarComDto(
-                request.getValorTotal(),
-                request.getClienteId()
+    public ResponseEntity<PedidoResponseDTO> criar(@Valid @RequestBody PedidoRequest dto) {
+        return ResponseEntity.ok(
+                pedidoService.criarComDto(dto.getValorTotal(), dto.getClienteId())
         );
-        return ResponseEntity.ok(pedido);
     }
 
     @GetMapping

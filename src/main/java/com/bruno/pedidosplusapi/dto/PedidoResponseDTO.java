@@ -1,5 +1,7 @@
 package com.bruno.pedidosplusapi.dto;
 
+import com.bruno.pedidosplusapi.model.Cliente;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
