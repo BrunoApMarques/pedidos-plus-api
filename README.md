@@ -1,73 +1,176 @@
-# 🧩 Pedidos Plus API
+📦 pedidos-plus-api — API Completa de Clientes e Pedidos (Java + Spring Boot)
 
-API REST construída com **Spring Boot 3**, **Java 17** e **H2 Database**, para gerenciamento de **clientes e pedidos**.  
-Desenvolvida para fins de estudo e prática de arquitetura RESTful, boas práticas e versionamento com Git.
+API REST desenvolvida em Java + Spring Boot para gerenciamento de clientes e pedidos, com arquitetura evoluída, camadas bem definidas e código limpo.
 
----
+Essa API segue padrões usados em empresas como Itaú, XP, Mercado Livre, Nubank e BTG.
 
-## 🚀 Tecnologias
+🏗 Arquitetura da Aplicação
 
-| Stack | Descrição |
-|--------|------------|
-| ☕ **Java 17** | Linguagem principal do projeto |
-| ⚙️ **Spring Boot 3** | Framework para criação de APIs REST |
-| 🗃 **Spring Data JPA** | Mapeamento objeto-relacional |
-| 🧩 **H2 Database** | Banco de dados em memória para testes |
-| 🧰 **Lombok** | Geração automática de getters e setters |
-| 📘 **Springdoc OpenAPI** | Geração automática da documentação Swagger |
+A aplicação segue:
 
----
+✔ Arquitetura MVC + Service Layer + Repository
+✔ Princípios SOLID
+✔ Separação de módulos (cliente + pedido)
+✔ Controllers enxutos
+✔ Services com regra de negócio real
+✔ Repositório desacoplado
 
-## 🧱 Arquitetura do Projeto
+📌 Diagrama da Arquitetura
+<img src="https://i.imgur.com/VB0f1Bv.png" width="450">
+🚀 Tecnologias Utilizadas
+Tecnologia	Função
+☕ Java 17+	Linguagem principal
+🍃 Spring Boot	Criação da API REST
+🛠 Spring Web	Controllers REST
+📦 Spring Data JPA	Persistência
+🧪 JUnit/Mockito	Testes automatizados
+🐬 H2 (futuro)	Banco embarcado
+🐙 Git & GitHub	Versionamento
+🐳 Docker	Containerização (opcional)
+📁 Estrutura do Projeto
+src/main/java/com/bruno/pedidosplus
+ ├── controller
+ │     ├── ClienteController
+ │     └── PedidoController
+ ├── model
+ │     ├── Cliente
+ │     └── Pedido
+ ├── repository
+ │     ├── ClienteRepository
+ │     └── PedidoRepository
+ └── service
+       ├── ClienteService
+       └── PedidoService
 
----
+📌 Funcionalidades do Sistema
+👥 Clientes
 
-src/
-├── main/
-│ ├── java/com/bruno/pedidosplusapi/
-│ │ ├── controller/ → Endpoints REST
-│ │ ├── model/ → Entidades e enums
-│ │ ├── repository/ → Interfaces JPA
-│ │ └── service/ → Regras de negócio
-│ └── resources/
-│ └── application.properties
-└── test/ → Testes unitários e integrados
+Criar cliente
 
+Buscar cliente por ID
 
----
+Listar clientes
 
-## ⚙️ Configuração e Execução
+Atualizar cliente
 
-### 🔧 Requisitos
-- **Java 17+**
-- **Maven 3.9+**
+Deletar cliente
 
-### ▶️ Executar localmente
-Clone o projeto:
+🛒 Pedidos
 
-bash
+Criar pedido vinculado ao cliente
+
+Listar pedidos
+
+Buscar pedido por ID
+
+Atualizar pedido
+
+Deletar pedido
+
+🔗 Endpoints da API
+👥 Clientes
+🆕 Criar cliente
+
+POST /clientes
+Body exemplo:
+
+{
+  "nome": "Bruno Marques",
+  "email": "bruno@gmail.com"
+}
+
+🔎 Buscar cliente por ID
+
+GET /clientes/{id}
+
+{
+  "id": 1,
+  "nome": "Bruno Marques",
+  "email": "bruno@gmail.com"
+}
+
+📄 Listar todos os clientes
+
+GET /clientes
+
+🔄 Atualizar cliente
+
+PUT /clientes/{id}
+
+{
+  "nome": "Bruno M.",
+  "email": "brunomarques@gmail.com"
+}
+
+🗑 Deletar cliente
+
+DELETE /clientes/{id}
+
+🛒 Pedidos
+🆕 Criar pedido
+
+POST /pedidos
+
+{
+  "clienteId": 1,
+  "descricao": "Mouse Gamer RGB",
+  "valor": 249.90
+}
+
+🔎 Buscar pedido
+
+GET /pedidos/{id}
+
+📄 Listar pedidos
+
+GET /pedidos
+
+🔄 Atualizar pedido
+
+PUT /pedidos/{id}
+
+🗑 Deletar pedido
+
+DELETE /pedidos/{id}
+
+🛠 Como rodar o projeto localmente
+1️⃣ Clonar o repositório
 git clone https://github.com/BrunoApMarques/pedidos-plus-api.git
 cd pedidos-plus-api
 
-Execute a aplicação:
+2️⃣ Executar com Maven
 mvn spring-boot:run
 
+3️⃣ Acessar a API
+http://localhost:8080/clientes  
+http://localhost:8080/pedidos
 
-Acesse no navegador:
-👉 http://localhost:8080/swagger-ui.html
+🧪 Testes Automatizados (Mapa para o futuro)
 
+Testes unitários com Mockito
 
-🧪 Endpoints Principais
+Testes de controller com MockMvc
 
-👤 Clientes
+Validações do fluxo de erro
 
-| Método   | Endpoint         | Descrição                |
-| -------- | ---------------- | ------------------------ |
-| `POST`   | `/clientes`      | Cadastra um novo cliente |
-| `GET`    | `/clientes`      | Lista todos os clientes  |
-| `GET`    | `/clientes/{id}` | Busca um cliente pelo ID |
-| `PUT`    | `/clientes/{id}` | Atualiza um cliente      |
-| `DELETE` | `/clientes/{id}` | Remove um cliente        |
+🐳 Rodar com Docker (opcional) — Futuro
+docker build -t pedidosplus-api .
+docker run -p 8080:8080 pedidosplus-api
 
-.....
+🗺 Roadmap para Evolução
 
+Adicionar banco H2 ou PostgreSQL
+
+Documentação com Swagger
+
+Implementar DTOs e validações
+
+Criar tratamento global de exceções
+
+Melhorar logs e monitoramento
+
+👨‍💻 Autor
+
+Bruno Marques
+Desenvolvedor Back-end Java | Spring Boot | APIs REST
+🔗 GitHub: https://github.com/BrunoApMarques
