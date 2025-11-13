@@ -4,19 +4,7 @@ API REST desenvolvida em Java + Spring Boot para gerenciamento de clientes e ped
 
 Essa API segue padrões usados em empresas como Itaú, XP, Mercado Livre, Nubank e BTG.
 
-🏗 Arquitetura da Aplicação
 
-A aplicação segue:
-
-✔ Arquitetura MVC + Service Layer + Repository
-✔ Princípios SOLID
-✔ Separação de módulos (cliente + pedido)
-✔ Controllers enxutos
-✔ Services com regra de negócio real
-✔ Repositório desacoplado
-
-📌 Diagrama da Arquitetura
-<img src="https://i.imgur.com/VB0f1Bv.png" width="450">
 🚀 Tecnologias Utilizadas
 Tecnologia	Função
 ☕ Java 17+	Linguagem principal
