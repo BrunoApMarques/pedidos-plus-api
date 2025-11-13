@@ -1,75 +1,71 @@
-📦 pedidos-plus-api — API Completa de Clientes e Pedidos (Java + Spring Boot)
+🔐 auth-users-api — API de Autenticação e Gerenciamento de Usuários (Java + Spring Boot + JWT)
 
-API REST desenvolvida em Java + Spring Boot para gerenciamento de clientes e pedidos, com arquitetura evoluída, camadas bem definidas e código limpo.
 
-Essa API segue padrões usados em empresas como Itaú, XP, Mercado Livre, Nubank e BTG.
+
+
+
+
+
+
+
+
+API REST desenvolvida com Java + Spring Boot + JWT para autenticação de usuários, cadastro, login e proteção de rotas.
+
+Inclui boas práticas de segurança e estrutura aplicada no mercado.
 
 
 🚀 Tecnologias Utilizadas
 Tecnologia	Função
 ☕ Java 17+	Linguagem principal
-🍃 Spring Boot	Criação da API REST
-🛠 Spring Web	Controllers REST
-📦 Spring Data JPA	Persistência
-🧪 JUnit/Mockito	Testes automatizados
-🐬 H2 (futuro)	Banco embarcado
+🍃 Spring Boot	Framework
+🔐 Spring Security	Responsable pela segurança
+🔑 JWT	Autenticação
+🧂 BCrypt	Criptografia de senhas
 🐙 Git & GitHub	Versionamento
-🐳 Docker	Containerização (opcional)
+🧪 JUnit/Mockito	Testes automatizados (futuro)
+
 📁 Estrutura do Projeto
-src/main/java/com/bruno/pedidosplus
- ├── controller
- │     ├── ClienteController
- │     └── PedidoController
- ├── model
- │     ├── Cliente
- │     └── Pedido
- ├── repository
- │     ├── ClienteRepository
- │     └── PedidoRepository
- └── service
-       ├── ClienteService
-       └── PedidoService
 
-📌 Funcionalidades do Sistema
-👥 Clientes
 
-Criar cliente
+src/
+main/
+java/
+com/
+bruno/
+auth/api
+ ├── controller     # Login e cadastro
+ ├── model          # Entidade User
+ ├── repository     # UserRepository
+ └── service        # Regra de negócio + JWT
+ 
 
-Buscar cliente por ID
+🔐 Fluxo de Autenticação JWT
 
-Listar clientes
+1️⃣ O usuário envia email + senha
+2️⃣ A API valida e gera um JWT Token
+3️⃣ O token deve ser enviado no header:
 
-Atualizar cliente
+Authorization: Bearer SEU_TOKEN_AQUI
 
-Deletar cliente
 
-🛒 Pedidos
-
-Criar pedido vinculado ao cliente
-
-Listar pedidos
-
-Buscar pedido por ID
-
-Atualizar pedido
-
-Deletar pedido
+4️⃣ As rotas protegidas só respondem se o token for válido
 
 🔗 Endpoints da API
-👥 Clientes
-🆕 Criar cliente
+👤 Cadastro de usuário
+🆕 Criar usuário
 
-POST /clientes
-Body exemplo:
+POST /auth/register
+
+Body:
 
 {
   "nome": "Bruno Marques",
-  "email": "bruno@gmail.com"
+  "email": "bruno@gmail.com",
+  "senha": "123456"
 }
 
-🔎 Buscar cliente por ID
 
-GET /clientes/{id}
+Resposta:
 
 {
   "id": 1,
@@ -77,88 +73,78 @@ GET /clientes/{id}
   "email": "bruno@gmail.com"
 }
 
-📄 Listar todos os clientes
+🔑 Login (gera o token JWT)
+🔐 Login
 
-GET /clientes
+POST /auth/login
 
-🔄 Atualizar cliente
-
-PUT /clientes/{id}
-
-{
-  "nome": "Bruno M.",
-  "email": "brunomarques@gmail.com"
-}
-
-🗑 Deletar cliente
-
-DELETE /clientes/{id}
-
-🛒 Pedidos
-🆕 Criar pedido
-
-POST /pedidos
+Body:
 
 {
-  "clienteId": 1,
-  "descricao": "Mouse Gamer RGB",
-  "valor": 249.90
+  "email": "bruno@gmail.com",
+  "senha": "123456"
 }
 
-🔎 Buscar pedido
 
-GET /pedidos/{id}
+Resposta:
 
-📄 Listar pedidos
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
 
-GET /pedidos
+🛡 Rotas protegidas
+📄 Buscar dados do usuário logado
 
-🔄 Atualizar pedido
+GET /auth/me
 
-PUT /pedidos/{id}
+Header:
 
-🗑 Deletar pedido
+Authorization: Bearer SEU_TOKEN
 
-DELETE /pedidos/{id}
+
+Resposta:
+
+{
+  "id": 1,
+  "nome": "Bruno Marques",
+  "email": "bruno@gmail.com"
+}
 
 🛠 Como rodar o projeto localmente
 1️⃣ Clonar o repositório
-git clone https://github.com/BrunoApMarques/pedidos-plus-api.git
-cd pedidos-plus-api
+git clone https://github.com/BrunoApMarques/auth-users-api.git
+cd auth-users-api
 
-2️⃣ Executar com Maven
+2️⃣ Rodar a aplicação
 mvn spring-boot:run
 
-3️⃣ Acessar a API
-http://localhost:8080/clientes  
-http://localhost:8080/pedidos
+3️⃣ Testar os endpoints com Postman ou Insomnia
+🧪 Testes Automatizados (Planned)
 
-🧪 Testes Automatizados (Mapa para o futuro)
+Testes unitários da camada Service
 
-Testes unitários com Mockito
+MockMvc nos endpoints
 
-Testes de controller com MockMvc
+Testes do fluxo JWT
 
-Validações do fluxo de erro
+🐳 Rodar com Docker (Opcional — futuro)
+docker build -t auth-users-api .
+docker run -p 8080:8080 auth-users-api
 
-🐳 Rodar com Docker (opcional) — Futuro
-docker build -t pedidosplus-api .
-docker run -p 8080:8080 pedidosplus-api
+🗺 Roadmap (Evoluções Futuras)
 
-🗺 Roadmap para Evolução
+Atualizar estrutura para DTOs
 
-Adicionar banco H2 ou PostgreSQL
+Implementar refresh token
 
-Documentação com Swagger
+Adicionar Swagger/OpenAPI
 
-Implementar DTOs e validações
+Criar logs estruturados
 
-Criar tratamento global de exceções
-
-Melhorar logs e monitoramento
+Criar roles (USER / ADMIN)
 
 👨‍💻 Autor
 
 Bruno Marques
-Desenvolvedor Back-end Java | Spring Boot | APIs REST
+Desenvolvedor Back-end Java | Spring Boot | Microsserviços | Segurança
 🔗 GitHub: https://github.com/BrunoApMarques
